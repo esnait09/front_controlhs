@@ -12,6 +12,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <link rel="stylesheet" href="./CSS/styles.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="form-container">
@@ -79,6 +80,71 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
       <button id="Parar">Parar</button>
       <button id="Cargar_hora">Cargar Horas</button>
     </div>
+  </div>
+
+  <!-- Gráfico -->
+  <div class="grafico-container">
+    <h2>Horas Trabajadas por Persona</h2>
+    <canvas id="graficoHoras" width="800" height="400"></canvas>
+
+    <?php
+    // Incluir la conexión a la base de datos y recuperar los datos del gráfico
+    include 'php/conexion.php'; 
+
+    $query = "SELECT Nombre_y_Apellido, SUM(TIME_TO_SEC(Horas_Diarias_Realizadas)) as total_horas
+              FROM registros
+              GROUP BY Nombre_y_Apellido";
+    $result = $conn->query($query);
+
+    $names = [];
+    $hours = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $names[] = $row['Nombre_y_Apellido'];
+        $hours[] = $row['total_horas'];
+    }
+
+    // Convertir arrays a formato JSON
+    $names_json = json_encode($names);
+    $hours_json = json_encode($hours);
+    ?>
+
+    <script>
+      // Datos pasados desde PHP a JavaScript
+      const names = <?php echo $names_json; ?>;
+      const hours = <?php echo $hours_json; ?>;
+      
+      // Crear el gráfico con Chart.js
+      const ctx = document.getElementById('graficoHoras').getContext('2d');
+      const chart = new Chart(ctx, {
+          type: 'bar', // Tipo de gráfico
+          data: {
+              labels: names, // Etiquetas (nombres)
+              datasets: [{
+                  label: 'Horas realizadas',
+                  data: hours, // Datos (horas)
+                  backgroundColor: 'rgba(75, 192, 192, 0.6)', // Color de las barras con opacidad
+                  borderColor: 'rgba(75, 192, 192, 1)', // Color de las líneas de los bordes
+                  borderWidth: 1
+              }]
+          },
+          options: {
+            animation: {
+                easing: 'easeOutBounce',
+            },
+            elements: {
+                bar: {
+                    borderWidth: 2,
+                    borderColor: 'rgba(0,0,0,0.1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    hoverBackgroundColor: 'rgba(54, 162, 235, 0.7)',
+                    shadowColor: 'rgba(0, 0, 0, 0.1)',
+                    shadowBlur: 5,
+                },
+            },
+        }
+      });
+    </script>
   </div>
 </body>
 </html>

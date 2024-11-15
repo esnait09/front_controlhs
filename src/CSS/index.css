@@ -11,7 +11,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Asegura que la altura del body ocupe toda la ventana */
+    margin: 0; /* Elimina el margen por defecto del body */
 }
 
 .login-container {
@@ -27,6 +28,7 @@ body {
 h2 {
     margin-bottom: 20px;
     color: #333;
+    font-size: 24px; /* Aumenta el tamaño del título */
 }
 
 .input-group {
@@ -37,6 +39,7 @@ h2 {
     display: block;
     margin-bottom: 5px;
     color: #333;
+    font-size: 14px; /* Ajusta el tamaño del texto de las etiquetas */
 }
 
 .input-group input {
@@ -50,16 +53,21 @@ h2 {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #003366; /* Azul marino */
     color: #fff;
     border: none;
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición suave al pasar el mouse */
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #002244; /* Color más oscuro de azul marino */
+}
+
+button:active {
+    background-color: #001833; /* Color aún más oscuro cuando se hace clic */
 }
 
 .footer-image {
@@ -69,6 +77,49 @@ button:hover {
     width: 40%; /* Ajusta el tamaño de la imagen al 40% del ancho del contenedor */
     max-width: 120px; /* Establece un ancho máximo para la imagen */
     height: auto; /* Mantiene la proporción de la imagen */
-   
+    border-radius: 8px; /* Si quieres bordes redondeados */
 }
 
+/* Estilo para el cronómetro, alineado a la derecha */
+.cronometro-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Alinea el cronómetro al lado derecho */
+    justify-content: center;
+    height: 300px; /* Ajusta la altura del contenedor según sea necesario */
+    text-align: center;
+    width: 300px; /* Puedes ajustar el tamaño del contenedor */
+}
+
+.cronometro {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.cronometro-buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.cronometro-buttons button {
+    padding: 15px 20px;
+    background-color: #003366; /* Azul marino */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1.2em;
+    width: auto;
+    min-width: 150px;
+}
+
+.cronometro-buttons button:hover {
+    background-color: #002244; /* Color más oscuro de azul marino al pasar el mouse */
+}
+
+.cronometro-buttons button:active {
+    background-color: #001833; /* Color más oscuro de azul marino al presionar el botón */
+}

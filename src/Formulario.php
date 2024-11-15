@@ -9,7 +9,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario</title>
-  <link rel="stylesheet" href="src/CSS/styles.css" />
+  <link rel="stylesheet" href="CSS/stylses.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -110,62 +110,45 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
     ?>
 
 <script>
-      // Datos pasados desde PHP a JavaScript
-      const projects = <?php echo $projects_json; ?>;
-      const totalHours = <?php echo $total_hours_json; ?>;
+    fetch('php/datos_grafico.php')
+      .then(response => response.json())
+      .then(data => {
+        const ctx = document.getElementById('graficoHoras').getContext('2d');
 
-      // Crear el gráfico con Chart.js
-      const ctx = document.getElementById('graficoHoras').getContext('2d');
-      const chart = new Chart(ctx, {
+        // Crear el gráfico de barras dobles
+        const chart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: projects, // Etiquetas (proyectos)
-              datasets: [{
-                  label: 'Horas realizadas',
-                  data: totalHours, // Datos (horas totales por proyecto)
-                  backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                  borderColor: 'rgba(75, 192, 192, 1)',
-                  borderWidth: 1
-              }]
+            labels: data.projects, // Proyectos
+            datasets: data.datasets // Datos desde PHP
           },
           options: {
-            animation: {
-                easing: 'easeOutBounce',
-            },
-            elements: {
-                bar: {
-                    borderWidth: 2,
-                    borderColor: 'rgba(0,0,0,0.1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    hoverBackgroundColor: 'rgba(54, 162, 235, 0.7)',
-                    shadowColor: 'rgba(0, 0, 0, 0.1)',
-                    shadowBlur: 5,
-                },
+            responsive: true,
+            plugins: {
+              title: {
+                display: true,
+                text: 'Comparación de Horas Realizadas y Esperadas'
+              },
+              legend: {
+                position: 'top',
+              }
             },
             scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Horas'
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    labels: {
-                        color: 'rgb(75, 75, 75)'
-                    }
-                },
+              y: {
+                beginAtZero: true,
+                suggestedMax: 6, // Máximo sugerido en el eje Y
                 title: {
-                    display: true,
-                    text: 'Total de Horas por Proyecto'
+                  display: true,
+                  text: 'Horas'
                 }
+              }
             }
-        }
-      });
-    </script>
+          }
+        });
+      })
+      .catch(error => console.error('Error al cargar los datos del gráfico:', error));
+  </script>
+
   </div>
 </body>
 </html>

@@ -84,47 +84,47 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 
   <!-- Gráfico -->
   <div class="grafico-container">
-    <h2>Horas Trabajadas por Persona</h2>
+    <h2>Horas Totales por Proyecto</h2>
     <canvas id="graficoHoras" width="800" height="400"></canvas>
 
     <?php
     // Incluir la conexión a la base de datos y recuperar los datos del gráfico
-    include 'php/conexion.php'; 
+    include 'php/conexion.php';
 
-    $query = "SELECT Nombre_y_Apellido, SUM(TIME_TO_SEC(Horas_Diarias_Realizadas)) as total_horas
+    $query = "SELECT Tipo_de_proyecto, SUM(TIME_TO_SEC(Horas_Diarias_Realizadas)) as total_horas
               FROM registros
-              GROUP BY Nombre_y_Apellido";
+              GROUP BY Tipo_de_proyecto";
     $result = $conn->query($query);
 
-    $names = [];
-    $hours = [];
+    $projects = [];
+    $total_hours = [];
 
     while ($row = $result->fetch_assoc()) {
-        $names[] = $row['Nombre_y_Apellido'];
-        $hours[] = $row['total_horas'];
+        $projects[] = $row['Tipo_de_proyecto'];
+        $total_hours[] = $row['total_horas'] / 3600; // Convertir segundos a horas
     }
 
     // Convertir arrays a formato JSON
-    $names_json = json_encode($names);
-    $hours_json = json_encode($hours);
+    $projects_json = json_encode($projects);
+    $total_hours_json = json_encode($total_hours);
     ?>
 
-    <script>
+<script>
       // Datos pasados desde PHP a JavaScript
-      const names = <?php echo $names_json; ?>;
-      const hours = <?php echo $hours_json; ?>;
-      
+      const projects = <?php echo $projects_json; ?>;
+      const totalHours = <?php echo $total_hours_json; ?>;
+
       // Crear el gráfico con Chart.js
       const ctx = document.getElementById('graficoHoras').getContext('2d');
       const chart = new Chart(ctx, {
-          type: 'bar', // Tipo de gráfico
+          type: 'bar',
           data: {
-              labels: names, // Etiquetas (nombres)
+              labels: projects, // Etiquetas (proyectos)
               datasets: [{
                   label: 'Horas realizadas',
-                  data: hours, // Datos (horas)
-                  backgroundColor: 'rgba(75, 192, 192, 0.6)', // Color de las barras con opacidad
-                  borderColor: 'rgba(75, 192, 192, 1)', // Color de las líneas de los bordes
+                  data: totalHours, // Datos (horas totales por proyecto)
+                  backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
                   borderWidth: 1
               }]
           },
@@ -142,6 +142,27 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
                     shadowBlur: 5,
                 },
             },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Horas'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: 'rgb(75, 75, 75)'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Total de Horas por Proyecto'
+                }
+            }
         }
       });
     </script>

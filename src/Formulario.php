@@ -9,10 +9,56 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario</title>
-  <link rel="stylesheet" href="CSS/stylses.css" />
+  <link rel="stylesheet" href="CSS/stylsesss.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Mejorar el estilo del contenedor del gráfico */
+    .grafico-container {
+      margin-top: 20px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .grafico-container h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+      font-weight: 600;
+      animation: slideIn 1s ease-in-out;
+    }
+
+    /* Animación de fade-in */
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    /* Animación de deslizamiento */
+    @keyframes slideIn {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    /* Agregar sombra a las barras del gráfico */
+    .chartjs-render-monitor {
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .chartjs-render-monitor:hover {
+      transform: scale(1.1);
+    }
+
+  </style>
 </head>
 <body>
   <div class="form-container">
@@ -62,7 +108,19 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
       <textarea id="Descripcion_De_Lo_Realizado" name="Descripcion_De_Lo_Realizado" required></textarea>
 
       <label for="Horas_Diarias_Realizadas">Horas Diarias Realizadas:</label>
-      <input type="text" id="Horas_Diarias_Realizadas" name="Horas_Diarias_Realizadas" required />
+      <input type="text" id="Horas_Diarias_Realizadas" name="Horas_Diarias_Realizadas" required readonly />
+
+      <!-- Campo Tiempo Límite solo para supervisores -->
+      <?php if ($role === 'supervisor'): ?>
+        <form action="submit_registro.php" method="POST">
+          <!-- Otros campos del formulario -->
+          <label for="horasEsperadas">Horas Esperadas:</label>
+          <input type="number" id="horasEsperadas" name="horas_esperadas" value="4" step="0.01" required readonly>
+          <!-- Puedes usar readonly si no quieres que el usuario lo cambie -->
+          <button type="submit">Guardar</button>
+        </form>
+      <?php endif; ?>
+      <br>
 
       <label for="Fecha_Actual">Fecha Actual:</label>
       <input type="text" id="Fecha_Actual" name="Fecha_Actual" readonly />
@@ -88,7 +146,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
     <canvas id="graficoHoras" width="800" height="400"></canvas>
 
     <?php
-    // Incluir la conexión a la base de datos y recuperar los datos del gráfico
+    // Conexión a la base de datos y recuperación de datos
     include 'php/conexion.php';
 
     $query = "SELECT Tipo_de_proyecto, SUM(TIME_TO_SEC(Horas_Diarias_Realizadas)) as total_horas
@@ -109,46 +167,88 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
     $total_hours_json = json_encode($total_hours);
     ?>
 
-<script>
-    fetch('php/datos_grafico.php')
-      .then(response => response.json())
-      .then(data => {
-        const ctx = document.getElementById('graficoHoras').getContext('2d');
-
-        // Crear el gráfico de barras dobles
-        const chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.projects, // Proyectos
-            datasets: data.datasets // Datos desde PHP
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              title: {
-                display: true,
-                text: 'Comparación de Horas Realizadas y Esperadas'
-              },
-              legend: {
-                position: 'top',
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                suggestedMax: 6, // Máximo sugerido en el eje Y
-                title: {
-                  display: true,
-                  text: 'Horas'
+    <script>
+        fetch('php/datos_grafico.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-              }
-            }
-          }
-        });
-      })
-      .catch(error => console.error('Error al cargar los datos del gráfico:', error));
-  </script>
+                return response.json();
+            })
+            .then(data => {
+                const ctx = document.getElementById('graficoHoras').getContext('2d');
 
+                // Verificar que los datos estén completos
+                if (!data.projects || !data.datasets) {
+                    console.error('Datos del gráfico incompletos:', data);
+                    return;
+                }
+
+                // Crear gráfico de barras con animación
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.projects, // Proyectos
+                        datasets: data.datasets // Datos desde PHP
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Comparación de Horas Realizadas y Esperadas',
+                                font: {
+                                    size: 18
+                                }
+                            },
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        const value = context.raw.toFixed(2); // Formatear a 2 decimales
+                                        return `${context.dataset.label}: ${value} horas`;
+                                    }
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 1000, // Duración de la animación
+                            easing: 'easeInOutCubic' // Efecto de aceleración/deceleración
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Proyectos',
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                suggestedMax: 6, // Máximo sugerido en el eje Y
+                                title: {
+                                    display: true,
+                                    text: 'Horas',
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error al cargar los datos del gráfico:', error));
+    </script>
   </div>
 </body>
 </html>

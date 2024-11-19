@@ -2,11 +2,12 @@
 header('Content-Type: application/json');
 include 'conexion.php';
 
-// Consulta SQL para obtener las horas realizadas por proyecto
+// Consulta SQL para obtener horas realizadas y esperadas por proyecto
 $query = "
 SELECT 
     Tipo_de_proyecto, 
-    SUM(TIME_TO_SEC(Horas_Diarias_Realizadas)) AS total_horas_realizadas
+    SUM(TIME_TO_SEC(Horas_Diarias_Realizadas)) AS total_horas_realizadas,
+    SUM(horas_esperadas) AS total_horas_esperadas
 FROM 
     registros
 GROUP BY 
@@ -21,7 +22,7 @@ $expected_hours = [];
 while ($row = $result->fetch_assoc()) {
     $projects[] = $row['Tipo_de_proyecto'];
     $real_hours[] = $row['total_horas_realizadas'] / 3600; // Convertir segundos a horas
-    $expected_hours[] = 4; // Fijo: 4 horas esperadas
+    $expected_hours[] = (float)$row['total_horas_esperadas']; // Convertir a float para asegurar compatibilidad
 }
 
 // Construir la respuesta en formato JSON

@@ -60,6 +60,7 @@ body {
   margin-left: 50px; /* Ajusta esta cantidad para moverlo hacia la derecha */
 }
 
+
 .cronometro {
   font-size: 2em;
   margin-bottom: 20px;
@@ -162,6 +163,7 @@ select option {
 
 /* Estilo para el label del campo Tiempo Límite */
 label[for='Tiempo_Limite'] {
+label[for="Tiempo_Limite"] {
   font-weight: bold;
   color: #333333;
   margin-bottom: 5px;
@@ -190,6 +192,7 @@ button#eliminarTiempoLimite {
 button#agregarTiempoLimite:hover,
 button#eliminarTiempoLimite:hover {
   background-color: #002244; /* Azul más oscuro en hover */
+  background-color:#002244; /* Azul más oscuro en hover */
   transform: scale(1.05); /* Efecto de agrandamiento en hover */
 }
 
@@ -233,9 +236,10 @@ button#cancelButton {
   background-color: #cc0000; /* Rojo para el botón de cancelar */
 }
 
-/* Estilo para los campos adicionales (si es necesario) */
 input[type='date'],
 input[type='text'] {
+input[type="date"],
+input[type="text"] {
   padding: 8px;
   border: 1px solid #cccccc;
   border-radius: 4px;
@@ -255,4 +259,47 @@ input[type='text'] {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.grafico-container {
+  margin-top: 20px;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.grafico-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+  animation: slideIn 1s ease-in-out;
+}
+
+/* Animación de fade-in */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Animación de deslizamiento */
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Agregar sombra a las barras del gráfico */
+.chartjs-render-monitor {
+  transition: transform 0.2s ease-in-out;
+}
+
+.chartjs-render-monitor:hover {
+  transform: scale(1.1);
 }

@@ -13,52 +13,6 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    /* Mejorar el estilo del contenedor del gráfico */
-    .grafico-container {
-      margin-top: 20px;
-      text-align: center;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .grafico-container h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-      color: #333;
-      font-weight: 600;
-      animation: slideIn 1s ease-in-out;
-    }
-
-    /* Animación de fade-in */
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-
-    /* Animación de deslizamiento */
-    @keyframes slideIn {
-      0% {
-        transform: translateX(-100%);
-      }
-      100% {
-        transform: translateX(0);
-      }
-    }
-
-    /* Agregar sombra a las barras del gráfico */
-    .chartjs-render-monitor {
-      transition: transform 0.2s ease-in-out;
-    }
-
-    .chartjs-render-monitor:hover {
-      transform: scale(1.1);
-    }
-
-  </style>
 </head>
 <body>
   <div class="form-container">
@@ -121,6 +75,14 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
         </form>
       <?php endif; ?>
       <br>
+
+      <!-- Campo Tiempo Límite solo para supervisores -->
+      <?php if ($role === 'supervisor'): ?>
+      <label for="Tiempo_Limite">Tiempo Límite:</label>
+      <input type="number" id="Tiempo_Limite" name="Tiempo_Limite" placeholder="Ingrese tiempo en horas" min="0" step="0.1" />
+      <button type="button" id="agregarTiempoLimite">Agregar Tiempo Límite</button>
+      <button type="button" id="eliminarTiempoLimite">Eliminar Tiempo Límite</button>
+      <?php endif; ?>
 
       <label for="Fecha_Actual">Fecha Actual:</label>
       <input type="text" id="Fecha_Actual" name="Fecha_Actual" readonly />

@@ -9,7 +9,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario</title>
-  <link rel="stylesheet" href="CSS/stylses.css" />
+  <link rel="stylesheet" href="CSS/stylsess.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -64,6 +64,14 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
       <label for="Horas_Diarias_Realizadas">Horas Diarias Realizadas:</label>
       <input type="text" id="Horas_Diarias_Realizadas" name="Horas_Diarias_Realizadas" required />
 
+      <!-- Campo Tiempo Límite solo para supervisores -->
+      <?php if ($role === 'supervisor'): ?>
+      <label for="Tiempo_Limite">Tiempo Límite:</label>
+      <input type="number" id="Tiempo_Limite" name="Tiempo_Limite" placeholder="Ingrese tiempo en horas" min="0" step="0.1" />
+      <button type="button" id="agregarTiempoLimite">Agregar Tiempo Límite</button>
+      <button type="button" id="eliminarTiempoLimite">Eliminar Tiempo Límite</button>
+      <?php endif; ?>
+
       <label for="Fecha_Actual">Fecha Actual:</label>
       <input type="text" id="Fecha_Actual" name="Fecha_Actual" readonly />
 
@@ -86,69 +94,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <div class="grafico-container">
     <h2>Horas Totales por Proyecto</h2>
     <canvas id="graficoHoras" width="800" height="400"></canvas>
-
-    <?php
-    // Incluir la conexión a la base de datos y recuperar los datos del gráfico
-    include 'php/conexion.php';
-
-    $query = "SELECT Tipo_de_proyecto, SUM(TIME_TO_SEC(Horas_Diarias_Realizadas)) as total_horas
-              FROM registros
-              GROUP BY Tipo_de_proyecto";
-    $result = $conn->query($query);
-
-    $projects = [];
-    $total_hours = [];
-
-    while ($row = $result->fetch_assoc()) {
-        $projects[] = $row['Tipo_de_proyecto'];
-        $total_hours[] = $row['total_horas'] / 3600; // Convertir segundos a horas
-    }
-
-    // Convertir arrays a formato JSON
-    $projects_json = json_encode($projects);
-    $total_hours_json = json_encode($total_hours);
-    ?>
-
-<script>
-    fetch('php/datos_grafico.php')
-      .then(response => response.json())
-      .then(data => {
-        const ctx = document.getElementById('graficoHoras').getContext('2d');
-
-        // Crear el gráfico de barras dobles
-        const chart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: data.projects, // Proyectos
-            datasets: data.datasets // Datos desde PHP
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              title: {
-                display: true,
-                text: 'Comparación de Horas Realizadas y Esperadas'
-              },
-              legend: {
-                position: 'top',
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                suggestedMax: 6, // Máximo sugerido en el eje Y
-                title: {
-                  display: true,
-                  text: 'Horas'
-                }
-              }
-            }
-          }
-        });
-      })
-      .catch(error => console.error('Error al cargar los datos del gráfico:', error));
-  </script>
-
+    <!-- Script del gráfico -->
   </div>
 </body>
 </html>

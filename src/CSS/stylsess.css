@@ -17,7 +17,7 @@ body {
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   width: 45%;
   box-sizing: border-box; /* Incluye padding y border en el ancho total */
-  margin-bottom: 60px; /* Aumenta el espaciado entre contenedores (40px + 20px adicionales) */
+  margin-bottom: 100px; /* Aumenta el espaciado entre contenedores (40px + 20px adicionales) */
 }
 
 /* Ajustes para pantallas pequeñas */
@@ -51,16 +51,20 @@ body {
 
 .cronometro-container {
   display: flex;
+  margin-top: 10px;
   flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Centra el contenido verticalmente en el contenedor */
-  text-align: center; /* Alinea el texto del cronómetro y los botones en el centro */
-  height: 300px; /* Ajusta la altura del contenedor según sea necesario */
+  align-items: center; /* Alinea el cronómetro a la izquierda */
+  justify-content: center; /* Centra verticalmente */
+  text-align: center; /* Ajusta el texto del cronómetro a la izquierda */
+  height: 300px;
+  margin-left: 50px; /* Ajusta esta cantidad para moverlo hacia la derecha */
 }
+
 
 .cronometro {
   font-size: 2em;
   margin-bottom: 20px;
+  text-align: center; /* Asegura que el cronómetro esté centrado */
 }
 
 .cronometro-buttons {
@@ -143,4 +147,104 @@ input[type='submit']:active {
 
 select option {
   text-align: center; /* Centra el texto de las opciones dentro del select */
+}
+
+
+/* Estilo para el campo de Tiempo Límite */
+#Tiempo_Limite {
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  margin-bottom: 15px; /* Espaciado debajo del campo */
+  font-size: 1.1em; /* Tamaño de texto ajustado */
+  text-align: center; /* Centra el texto numérico dentro del campo */
+  background-color: #f9f9f9; /* Color de fondo sutil */
+}
+
+/* Estilo para el label del campo Tiempo Límite */
+label[for="Tiempo_Limite"] {
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 5px;
+  display: inline-block; /* Asegura que el texto se alinee con el campo */
+  text-align: center;
+  font-size: 1.1em; /* Tamaño de fuente ligeramente mayor */
+}
+
+
+
+
+/* Estilo para los botones de agregar y eliminar Tiempo Límite */
+button#agregarTiempoLimite,
+button#eliminarTiempoLimite {
+  background-color: #002244; /* Azul suave */
+  color: white;
+  font-size: 1em;
+  padding: 12px 20px; /* Botones con un poco más de padding */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  min-width: 150px; /* Ancho mínimo */
+  margin-top: 10px; /* Espaciado superior entre los botones */
+  display: inline-block; /* Asegura que los botones estén alineados */
+  margin-right: 10px; /* Espaciado entre los botones */
+}
+
+button#agregarTiempoLimite:hover,
+button#eliminarTiempoLimite:hover {
+  background-color:#002244; /* Azul más oscuro en hover */
+  transform: scale(1.05); /* Efecto de agrandamiento en hover */
+}
+
+button#agregarTiempoLimite:active,
+button#eliminarTiempoLimite:active {
+  background-color: #002244; /* Azul aún más oscuro al presionar */
+  transform: scale(0.98); /* Efecto de presión visual */
+}
+
+/* Estilos para botones de formulario */
+button {
+  padding: 15px 20px;
+  background-color: #003366; /* Azul marino */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  font-size: 1.2em;
+  width: auto;
+  min-width: 150px; /* Ancho mínimo para los botones */
+  margin-top: 10px; /* Espaciado superior entre botones */
+}
+
+button:hover {
+  background-color: #002244; /* Azul marino más oscuro cuando el mouse está encima */
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #001a33; /* Azul aún más oscuro al presionar */
+  transform: scale(0.98);
+}
+
+/* Estilo para los botones de enviar y cancelar */
+button#submitButton {
+  background-color: #006600; /* Verde para el botón de enviar */
+}
+
+button#cancelButton {
+  background-color: #cc0000; /* Rojo para el botón de cancelar */
+}
+
+/* Estilo para los campos adicionales (si es necesario) */
+input[type="date"],
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  text-align: center;
 }

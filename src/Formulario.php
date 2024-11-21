@@ -9,12 +9,12 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario</title>
-  <link rel="stylesheet" href="CSS/stylsesss.css" />
+  <link rel="stylesheet" href="CSS/stylsessss.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body class="<?php echo $role; ?>">
   <div class="form-container">
     <h2>Gestión de Desarrollo</h2>
     <form action="php/submit.php" method="post">
@@ -69,25 +69,18 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
         <form action="submit_registro.php" method="POST">
           <!-- Otros campos del formulario -->
           <label for="horasEsperadas">Horas Esperadas:</label>
-          <input type="number" id="horasEsperadas" name="horas_esperadas" value="4" step="0.01" required readonly>
+          <input type="number" id="horasEsperadas" name="horas_esperadas" value="4" step="0.01">
           <!-- Puedes usar readonly si no quieres que el usuario lo cambie -->
           <button type="submit">Guardar</button>
         </form>
       <?php endif; ?>
       <br>
 
-      <!-- Campo Tiempo Límite solo para supervisores -->
-      <?php if ($role === 'supervisor'): ?>
-      <label for="Tiempo_Limite">Tiempo Límite:</label>
-      <input type="number" id="Tiempo_Limite" name="Tiempo_Limite" placeholder="Ingrese tiempo en horas" min="0" step="0.1" />
-      <button type="button" id="agregarTiempoLimite">Agregar Tiempo Límite</button>
-      <button type="button" id="eliminarTiempoLimite">Eliminar Tiempo Límite</button>
-      <?php endif; ?>
-
       <label for="Fecha_Actual">Fecha Actual:</label>
       <input type="text" id="Fecha_Actual" name="Fecha_Actual" readonly />
-
+      <?php if ($role === 'operador'): ?>
       <input type="submit" value="Cargar" />
+      <?php endif; ?>
     </form>
   </div>
 
@@ -106,7 +99,6 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <div class="grafico-container">
     <h2>Horas Totales por Proyecto</h2>
     <canvas id="graficoHoras" width="800" height="400"></canvas>
-
     <?php
     // Conexión a la base de datos y recuperación de datos
     include 'php/conexion.php';

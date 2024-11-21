@@ -1,103 +1,112 @@
 /* Estilo general */
 body {
-  position: relative;
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
   padding: 20px;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap; /* Permite que los contenedores se ajusten en pantallas más pequeñas */
+  justify-content: space-between; /* Espacia los elementos */
+  align-items: flex-start; /* Alinea los elementos desde la parte superior */
+  flex-wrap: wrap;
 }
 
-.form-container,
+/* Contenedor principal que mantiene el layout de 3 columnas */
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px; /* Controla el ancho máximo de todo el contenedor */
+  flex-wrap: wrap;
+}
+
+/* Formulario de gestión y desarrollo (izquierda) */
+.form-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  width: 45%; /* Ajusta el ancho del formulario */
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+/* Cronómetro (debajo del formulario) */
 .cronometro-container {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  width: 45%;
-  box-sizing: border-box; /* Incluye padding y border en el ancho total */
-  margin-bottom: 100px; /* Aumenta el espaciado entre contenedores (40px + 20px adicionales) */
+  width: 45%; /* Ajusta el ancho del cronómetro */
+  box-sizing: border-box;
+  margin-top: 20px; /* Espaciado entre el formulario y el cronómetro */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Gráfico (derecha) */
+.grafico-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  width: 45%; /* Ajusta el ancho del gráfico */
+  box-sizing: border-box;
+  margin-left: 20px; /* Espaciado entre el gráfico y los otros elementos */
 }
 
 /* Ajustes para pantallas pequeñas */
 @media (max-width: 1024px) {
   .form-container,
-  .cronometro-container {
-    width: 90%; /* Aumenta el ancho para pantallas medianas */
+  .cronometro-container,
+  .grafico-container {
+    width: 90%; /* Los contenedores ocuparán el 90% del ancho */
+    margin: 10px auto; /* Centra los contenedores */
+  }
+
+  .main-container {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    align-items: center; /* Centra los elementos en la columna */
   }
 }
 
-@media (max-width: 768px) {
-  /* Ajustes para dispositivos móviles */
-  body {
-    padding: 10px; /* Reduce el padding en pantallas pequeñas */
-  }
-
-  .form-container,
-  .cronometro-container {
-    width: 100%; /* Los contenedores ocuparán el 100% del ancho */
-    margin: 20px 0; /* Espaciado entre contenedores con más espacio en móviles */
-  }
-
-  .cronometro-buttons {
-    flex-direction: column; /* Los botones se apilan verticalmente */
-  }
-
-  .cronometro-buttons button {
-    margin-bottom: 10px; /* Espaciado entre botones en pantallas pequeñas */
-  }
-}
-
-.cronometro-container {
-  display: flex;
-  margin-top: 10px;
-  flex-direction: column;
-  align-items: center; /* Alinea el cronómetro a la izquierda */
-  justify-content: center; /* Centra verticalmente */
-  text-align: center; /* Ajusta el texto del cronómetro a la izquierda */
-  height: 300px;
-  margin-left: 50px; /* Ajusta esta cantidad para moverlo hacia la derecha */
-}
-
+/* Cronómetro */
 .cronometro {
   font-size: 2em;
   margin-bottom: 20px;
-  text-align: center; /* Asegura que el cronómetro esté centrado */
+  text-align: center;
 }
 
 .cronometro-buttons {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  margin-top: 10px; /* Espaciado superior de botones */
+  margin-top: 10px;
 }
 
 button {
-  padding: 15px 20px; /* Aumenta el padding para agrandar los botones */
-  background-color: #003366; /* Azul marino */
+  padding: 15px 20px;
+  background-color: #003366;
   color: white;
   border: none;
-  border-radius: 6px; /* Aumenta el radio de los bordes */
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease; /* Transición para el color y el efecto de clic */
-  font-size: 1.2em; /* Aumenta el tamaño del texto en los botones */
-  width: auto; /* Asegura que el ancho del botón se ajuste al contenido */
-  min-width: 150px; /* Ancho mínimo para los botones */
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  font-size: 1.2em;
+  min-width: 150px;
 }
 
 button:hover {
-  background-color: #002244; /* Azul marino más oscuro cuando el mouse está encima */
-  transform: scale(1.05); /* Efecto visual de agrandamiento al pasar el ratón */
+  background-color: #002244;
+  transform: scale(1.05);
 }
 
 button:active {
-  background-color: #001a33; /* Azul aún más oscuro al presionar el botón */
-  transform: scale(0.98); /* Efecto de presión visual */
+  background-color: #001a33;
+  transform: scale(0.98);
 }
 
-/* Estilos específicos para el formulario */
+/* Estilos del formulario */
 h2 {
   text-align: center;
   color: #333333;
@@ -109,7 +118,6 @@ form {
 }
 
 label {
-  text-align: center; /* Centra el texto de los labels */
   margin: 10px 0 5px;
   font-weight: bold;
 }
@@ -122,205 +130,28 @@ select {
   border: 1px solid #cccccc;
   border-radius: 4px;
   margin-bottom: 15px;
-  width: 100%; /* Asegura que el select ocupe todo el ancho disponible */
-  text-align: center; /* Centra el texto dentro del select */
-}
-
-input[type='submit'] {
-  padding: 15px 20px; /* Aumenta el padding del botón de enviar */
-  background-color: #003366; /* Azul marino */
-  color: white;
-  border: none;
-  border-radius: 6px; /* Aumenta el radio de los bordes */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1.2em; /* Aumenta el tamaño del texto en el botón de enviar */
-}
-
-input[type='submit']:hover {
-  background-color: #002244; /* Azul más oscuro al pasar el mouse */
-}
-
-input[type='submit']:active {
-  background-color: #001a33; /* Azul más oscuro al presionar */
-}
-
-select option {
-  text-align: center; /* Centra el texto de las opciones dentro del select */
-}
-
-/* Estilo para el campo de Tiempo Límite */
-#Tiempo_Limite {
-  padding: 8px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  width: 100%; /* Ocupa todo el ancho disponible */
-  margin-bottom: 15px; /* Espaciado debajo del campo */
-  font-size: 1.1em; /* Tamaño de texto ajustado */
-  text-align: center; /* Centra el texto numérico dentro del campo */
-  background-color: #f9f9f9; /* Color de fondo sutil */
-}
-
-/* Estilo para el label del campo Tiempo Límite */
-label[for='Tiempo_Limite'] {
-  font-weight: bold;
-  color: #333333;
-  margin-bottom: 5px;
-  display: inline-block; /* Asegura que el texto se alinee con el campo */
-  text-align: center;
-  font-size: 1.1em; /* Tamaño de fuente ligeramente mayor */
-}
-
-/* Estilo para los botones de agregar y eliminar Tiempo Límite */
-button#agregarTiempoLimite,
-button#eliminarTiempoLimite {
-  background-color: #002244; /* Azul suave */
-  color: white;
-  font-size: 1em;
-  padding: 12px 20px; /* Botones con un poco más de padding */
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  min-width: 150px; /* Ancho mínimo */
-  margin-top: 10px; /* Espaciado superior entre los botones */
-  display: inline-block; /* Asegura que los botones estén alineados */
-  margin-right: 10px; /* Espaciado entre los botones */
-}
-
-button#agregarTiempoLimite:hover,
-button#eliminarTiempoLimite:hover {
-  background-color: #002244; /* Azul más oscuro en hover */
-  background-color: #002244; /* Azul más oscuro en hover */
-  transform: scale(1.05); /* Efecto de agrandamiento en hover */
-}
-
-button#agregarTiempoLimite:active,
-button#eliminarTiempoLimite:active {
-  background-color: #002244; /* Azul aún más oscuro al presionar */
-  transform: scale(0.98); /* Efecto de presión visual */
-}
-
-/* Estilos para botones de formulario */
-button {
-  padding: 15px 20px;
-  background-color: #003366; /* Azul marino */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.1s ease;
-  font-size: 1.2em;
-  width: auto;
-  min-width: 150px; /* Ancho mínimo para los botones */
-  margin-top: 10px; /* Espaciado superior entre botones */
-}
-
-button:hover {
-  background-color: #002244; /* Azul marino más oscuro cuando el mouse está encima */
-  transform: scale(1.05);
-}
-
-button:active {
-  background-color: #001a33; /* Azul aún más oscuro al presionar */
-  transform: scale(0.98);
-}
-
-/* Estilo para los botones de enviar y cancelar */
-button#submitButton {
-  background-color: #006600; /* Verde para el botón de enviar */
-}
-
-button#cancelButton {
-  background-color: #cc0000; /* Rojo para el botón de cancelar */
-}
-
-input[type='date'],
-input[type='text'],
-input[type='date'],
-input[type='text'] {
-  padding: 8px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  width: 100%; /* Ocupa todo el ancho disponible */
+  width: 100%;
   text-align: center;
 }
 
-/* Estilos específicos para el supervisor */
-body.supervisor .grafico-container {
-  position: absolute; /* Posicionamiento absoluto para colocarlo en la esquina */
-  bottom: 119px; /* Ajusta la distancia desde la parte inferior */
-  right: 40px; /* Ajusta la distancia desde el lado derecho */
-  width: 900px; /* Ancho del contenedor del gráfico */
-  height: 540px; /* Altura del gráfico */
-  background-color: #ffffff; /* Fondo blanco para mejor visibilidad */
-  border: 1px solid #cccccc; /* Borde para delimitar el contenedor */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Sombra para destacar el contenedor */
-  padding: 4px; /* Espaciado interno */
-  text-align: center; /* Centra el contenido dentro del contenedor */
-}
-
-/* Encabezado del gráfico */
-body.supervisor .grafico-container h2 {
-  font-size: 16px; /* Tamaño reducido para el encabezado */
+/* Estilos del gráfico */
+.grafico-container h2 {
+  font-size: 16px;
   margin-bottom: 10px;
   color: #333;
   font-weight: 600;
 }
 
-/* Estilos específicos para el gráfico */
-body.supervisor .grafico {
-  max-width: 100%; /* Asegura que el gráfico no sea más grande que el contenedor */
-  max-height: 100%; /* Ajusta la altura para que no sobresalga */
+.grafico {
+  max-width: 100%;
+  max-height: 100%;
 }
 
-/* Ajustes para pantallas pequeñas */
+/* Ajustes para pantallas móviles */
 @media (max-width: 768px) {
-  body.supervisor .grafico-container {
-    width: 90%;
+  .grafico-container {
+    width: 100%;
     height: auto;
-    bottom: 10px;
-    right: 10px;
-  }
-}
-
-/* Estilos específicos para el supervisor */
-body.operador .grafico-container {
-  position: absolute; /* Posicionamiento absoluto para colocarlo en la esquina */
-  bottom: 119px; /* Ajusta la distancia desde la parte inferior */
-  right: 40px; /* Ajusta la distancia desde el lado derecho */
-  width: 900px; /* Ancho del contenedor del gráfico */
-  height: 540px; /* Altura del gráfico */
-  background-color: #ffffff; /* Fondo blanco para mejor visibilidad */
-  border: 1px solid #cccccc; /* Borde para delimitar el contenedor */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Sombra para destacar el contenedor */
-  padding: 4px; /* Espaciado interno */
-  text-align: center; /* Centra el contenido dentro del contenedor */
-}
-
-/* Encabezado del gráfico */
-body.operador .grafico-container h2 {
-  font-size: 16px; /* Tamaño reducido para el encabezado */
-  margin-bottom: 10px;
-  color: #333;
-  font-weight: 600;
-}
-
-/* Estilos específicos para el gráfico */
-body.operador .grafico {
-  max-width: 100%; /* Asegura que el gráfico no sea más grande que el contenedor */
-  max-height: 100%; /* Ajusta la altura para que no sobresalga */
-}
-
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 768px) {
-  body.operador .grafico-container {
-    width: 90%;
-    height: auto;
-    bottom: 10px;
-    right: 10px;
+    margin-left: 0;
   }
 }

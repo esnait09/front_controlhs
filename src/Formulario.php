@@ -84,17 +84,6 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
     </form>
   </div>
 
-  <!-- Cronómetro -->
-  <div class="cronometro-container">
-    <h2>Cronómetro</h2>
-    <div class="cronometro">00:00:00</div>
-    <div class="cronometro-buttons">
-      <button id="Comenzar">Comenzar</button>
-      <button id="Parar">Parar</button>
-      <button id="Cargar_hora">Cargar Horas</button>
-    </div>
-  </div>
-
   <!-- Gráfico -->
   <div class="grafico-container">
     <h2>Horas Totales por Proyecto</h2>
@@ -203,6 +192,17 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
             })
             .catch(error => console.error('Error al cargar los datos del gráfico:', error));
     </script>
+  </div>
+
+  <!-- Cronómetro -->
+  <div class="cronometro-container">
+    <h2>Cronómetro</h2>
+    <div class="cronometro">00:00:00</div>
+    <div class="cronometro-buttons">
+      <button id="Comenzar">Comenzar</button>
+      <button id="Parar">Parar</button>
+      <button id="Cargar_hora">Cargar Horas</button>
+    </div>
   </div>
 </body>
 </html>

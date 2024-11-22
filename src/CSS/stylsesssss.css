@@ -31,7 +31,7 @@ body {
 }
 
 /* Cronómetro (debajo del formulario) */
-.cronometro-container {
+.operador .cronometro-container {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
@@ -43,14 +43,41 @@ body {
   flex-direction: column;
   align-items: center;
 }
+/* Estilo base del cronómetro */
+.cronometro-container {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Para el rol de supervisor, colocarlo abajo del gráfico */
+.cronometro-supervisor {
+  position: absolute;
+  bottom: 100px;
+  right: 90px;
+  width: 900px; /* Ajusta el ancho según sea necesario */
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
 /* Gráfico (derecha) */
-.grafico-container {
+.operador .grafico-container {
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   width: 45%; /* Ajusta el ancho del gráfico */
+  box-sizing: border-box;
+  margin-left: 20px; /* Espaciado entre el gráfico y los otros elementos */
+}
+.supervisor .grafico-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  width: 1000px; /* Ajusta el ancho del gráfico */
   box-sizing: border-box;
   margin-left: 20px; /* Espaciado entre el gráfico y los otros elementos */
 }
@@ -94,6 +121,7 @@ button {
   transition: background-color 0.3s ease, transform 0.1s ease;
   font-size: 1.2em;
   min-width: 150px;
+  margin: 7px 5px; /* Margen superior e inferior de 10px, lateral de 5px */
 }
 
 button:hover {
@@ -102,6 +130,29 @@ button:hover {
 }
 
 button:active {
+  background-color: #001a33;
+  transform: scale(0.98);
+}
+input[type='submit'] {
+  padding: 15px 20px;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  font-size: 1.2em;
+  min-width: 150px;
+  margin: 7px 5px; /* Margen superior e inferior de 7px, lateral de 5px */
+  text-align: center;
+}
+
+input[type='submit']:hover {
+  background-color: #002244;
+  transform: scale(1.05);
+}
+
+input[type='submit']:active {
   background-color: #001a33;
   transform: scale(0.98);
 }
@@ -116,14 +167,24 @@ form {
   display: flex;
   flex-direction: column;
 }
-
+label,
+h2 {
+  text-align: center; /* Centra horizontalmente el texto */
+  display: block; /* Asegura que el ancho se aplique correctamente */
+  margin: 0 auto; /* Centra cualquier margen adicional */
+}
 label {
-  margin: 10px 0 5px;
-  font-weight: bold;
+  font-weight: bold; /* Opcional: resalta las etiquetas */
+  margin-bottom: 8px; /* Espaciado entre la etiqueta y el campo */
+}
+
+.form-container h2 {
+  text-align: center; /* Centra el título principal del formulario */
 }
 
 input[type='text'],
 input[type='email'],
+input[type='number'],
 input[type='tel'],
 select {
   padding: 8px;
@@ -132,6 +193,10 @@ select {
   margin-bottom: 15px;
   width: 100%;
   text-align: center;
+}
+input[type='number']:hover,
+input.input-field:hover {
+  border-color: #003366; /* Color azul para hover */
 }
 
 /* Estilos del gráfico */

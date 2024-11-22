@@ -9,7 +9,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario</title>
-  <link rel="stylesheet" href="CSS/stylsessss.css" />
+  <link rel="stylesheet" href="CSS/stylsesssss.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -66,15 +66,22 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 
       <!-- Campo Tiempo Límite solo para supervisores -->
       <?php if ($role === 'supervisor'): ?>
-        <form action="submit_registro.php" method="POST">
-          <!-- Otros campos del formulario -->
-          <label for="horasEsperadas">Horas Esperadas:</label>
-          <input type="number" id="horasEsperadas" name="horas_esperadas" value="4" step="0.01">
-          <!-- Puedes usar readonly si no quieres que el usuario lo cambie -->
-          <button type="submit">Guardar</button>
+        <form action="submit_registro.php" method="POST" class="form-container">
+            <!-- Otros campos del formulario -->
+            <label for="horasEsperadas">Horas Esperadas:</label>
+            <input 
+            type="number" 
+            id="horasEsperadas" 
+            name="horas_esperadas" 
+            value="4" 
+            step="1.00" 
+            class="input-field" 
+            />
+            <button type="submit">Guardar</button>
         </form>
-      <?php endif; ?>
-      <br>
+        <?php endif; ?>
+        <br>
+
 
       <label for="Fecha_Actual">Fecha Actual:</label>
       <input type="text" id="Fecha_Actual" name="Fecha_Actual" readonly />
@@ -83,7 +90,6 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
       <?php endif; ?>
     </form>
   </div>
-
   <!-- Gráfico -->
   <div class="grafico-container">
     <h2>Horas Totales por Proyecto</h2>
@@ -195,14 +201,15 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   </div>
 
   <!-- Cronómetro -->
-  <div class="cronometro-container">
-    <h2>Cronómetro</h2>
-    <div class="cronometro">00:00:00</div>
-    <div class="cronometro-buttons">
-      <button id="Comenzar">Comenzar</button>
-      <button id="Parar">Parar</button>
-      <button id="Cargar_hora">Cargar Horas</button>
-    </div>
+  <div class="cronometro-container <?php echo $role === 'supervisor' ? 'cronometro-supervisor' : ''; ?>">
+  <h2>Cronómetro</h2>
+  <div class="cronometro">00:00:00</div>
+  <div class="cronometro-buttons">
+    <button id="Comenzar">Comenzar</button>
+    <button id="Parar">Parar</button>
+    <button id="Cargar_hora">Cargar Horas</button>
   </div>
+</div>
+
 </body>
 </html>

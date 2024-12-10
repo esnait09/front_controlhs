@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: apache-php
+    volumes:
+      - /home/soporte/mi_proyecto2/front_controlhs:/var/www/html
+    ports:
+      - '8080:80'

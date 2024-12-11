@@ -27,7 +27,7 @@ if ($result->num_rows === 1) {
         $_SESSION['role'] = $user['role'];
         
         // Redirigir a formulario.html
-        header("Location: src/formulario.php");
+        header("Location: src/Formulario.php");
         exit;
     } else {
         // Contraseña incorrecta

@@ -33,8 +33,8 @@ if ($result->num_rows === 1) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
         
-        echo "Redirigiendo a Formulario.php";
-        header("Location: src/Formulario.php");
+        echo "Redirigiendo a formulario.php";
+        header("Location: src/formulario.php");
         exit;
     } else {
         $_SESSION['error'] = "Contraseña incorrecta.";

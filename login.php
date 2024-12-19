@@ -33,7 +33,7 @@ if ($result->num_rows === 1) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
         
-        echo "Redirigiendo a formulario.php";
+        // Redirigir sin usar echo
         header("Location: src/formulario.php");
         exit;
     } else {
@@ -46,5 +46,5 @@ if ($result->num_rows === 1) {
     header("Location: login.php");
     exit;
 }
-
 ?>
+

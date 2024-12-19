@@ -1,5 +1,6 @@
 <?php
 include('conexion.php');
+session_start(); // Para manejar sesiones
 
 // Verificar si el formulario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -21,38 +22,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fecha_actual = date('Y-m-d');
     }
 
-    // Verificar si ya existe un registro con el mismo tipo de proyecto
-    $query_check = "SELECT * FROM registros WHERE tipo_de_proyecto = '$tipo_de_proyecto'";
-    $result_check = $conn->query($query_check);
+    try {
+        // Verificar si ya existe un registro con el mismo tipo de proyecto
+        $query_check = "SELECT * FROM registros WHERE tipo_de_proyecto = ?";
+        $stmt_check = $conn->prepare($query_check);
+        $stmt_check->bind_param("s", $tipo_de_proyecto);
+        $stmt_check->execute();
+        $result_check = $stmt_check->get_result();
 
-    if ($result_check && $result_check->num_rows > 0) {
-        // Actualizar xd
-        $sql_update = "UPDATE registros 
-                       SET horas_esperadas = " . ($horas_esperadas !== null ? "'$horas_esperadas'" : "NULL") . "
-                       WHERE tipo_de_proyecto = '$tipo_de_proyecto'";
-        if ($conn->query($sql_update) === TRUE) {
-            echo "Horas esperadas actualizadas correctamente.";
+        if ($result_check->num_rows > 0) {
+            // Actualizar
+            $sql_update = "UPDATE registros 
+                           SET horas_esperadas = ? 
+                           WHERE tipo_de_proyecto = ?";
+            $stmt_update = $conn->prepare($sql_update);
+            $stmt_update->bind_param(
+                "ss",
+                $horas_esperadas,
+                $tipo_de_proyecto
+            );
+            $stmt_update->execute();
         } else {
-            echo "Error al actualizar las horas esperadas: " . $conn->error;
+            // Insertar un nuevo registro si no existe
+            $sql_insert = "INSERT INTO registros 
+                           (nombre_y_apellido, tipo_de_proyecto, descripcion_de_lo_realizado, horas_diarias_realizadas, horas_esperadas, fecha_actual) 
+                           VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt_insert = $conn->prepare($sql_insert);
+            $stmt_insert->bind_param(
+                "ssssss",
+                $nombre_y_apellido,
+                $tipo_de_proyecto,
+                $descripcion_de_lo_realizado,
+                $horas_diarias_realizadas,
+                $horas_esperadas,
+                $fecha_actual
+            );
+            $stmt_insert->execute();
         }
-    } else {
-        // Insertar un nuevo registro si no existe
-        $sql_insert = "INSERT INTO registros 
-                       (nombre_y_apellido, tipo_de_proyecto, descripcion_de_lo_realizado, horas_diarias_realizadas, horas_esperadas, fecha_actual)
-                       VALUES 
-                       ('$nombre_y_apellido', '$tipo_de_proyecto', '$descripcion_de_lo_realizado', '$horas_diarias_realizadas', ";
-        $sql_insert .= ($horas_esperadas !== null) ? "'$horas_esperadas'" : "NULL";
-        $sql_insert .= ", '$fecha_actual')";
 
-        if ($conn->query($sql_insert) === TRUE) {
-            echo "Datos guardados exitosamente.";
-        } else {
-            echo "Error al guardar los datos: " . $conn->error;
-        }
+        // Si todo es exitoso, redirigir
+        header("Location: ../formulario.php");
+        exit();
+    } catch (Exception $e) {
+        // Mostrar mensaje de error en caso de fallo
+        $error_message = "Hubo un error al procesar el formulario: " . $e->getMessage();
     }
-
-    header("Location: ../Formulario.php");
-    exit();
 }
 
 $conn->close();

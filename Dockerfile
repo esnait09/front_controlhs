@@ -5,7 +5,7 @@ FROM php:8.1-apache
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 # Copia los archivos del proyecto al contenedor
-COPY ./src /var/www/html
+COPY . /var/www/html
 
 # Establece el directorio de trabajo
 WORKDIR /var/www/html

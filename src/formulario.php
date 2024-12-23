@@ -1,6 +1,26 @@
 <?php
 session_start();
-$role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
+
+// Verificar si el usuario está autenticado y su rol
+if (!isset($_SESSION['username']) || !isset($_SESSION['role'])) {
+    // Si no hay sesión, redirigir al login
+    header("Location: ../index.html");
+    exit();
+}
+
+// Obtener el rol del usuario
+$role = $_SESSION['role'];
+
+// Verificar si el rol es válido
+if ($role !== 'supervisor' && $role !== 'operador') {
+    // Si no tiene el rol permitido, destruir la sesión y redirigir al login
+    session_unset();
+    session_destroy();
+    header("Location: ../index.html");
+    exit();
+}
+
+// Aquí continúa el flujo normal si el usuario tiene el rol adecuado
 ?>
 
 <!DOCTYPE html>
@@ -10,12 +30,27 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario</title>
   <link rel="stylesheet" href="CSS/stylsesssss.css" />
+  <link rel="stylesheet" href="CSS/navbar_generalx.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="<?php echo $role; ?>">
-  <div class="form-container">
+<nav class="navbar">
+  <ul class="navbar-nav navbar-nav-right">
+    <li class="nav-item">
+      <a class="navbar-brand">
+        <img src="IMG/logo.png" alt="Logo" style="height: 60px; width: auto;">
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="../logout.php" class="nav-link">Cerrar sesión</a>
+    </li>
+  </ul>
+</nav>
+
+
+<div class="form-container">
     <h2>Gestión de Desarrollo</h2>
     <form action="php/submit.php" method="post">
       <!-- Campo Nombre y Apellido -->

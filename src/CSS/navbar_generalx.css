@@ -1,0 +1,97 @@
+/* Estilos para el navbar */
+.navbar {
+  top: 0; /* Alínea el navbar con la parte superior de la ventana */
+  left: 0; /* Asegura que comience desde el borde izquierdo */
+  width: 100%; /* Ocupa todo el ancho de la ventana */
+  background-color: #d3d5d6; /* Color de fondo */
+  color: #fff; /* Color del texto */
+  padding: 0.75rem; /* Espaciado interno */
+  display: flex; /* Disposición flexible */
+  justify-content: flex-end; /* Alinea los elementos hacia el extremo derecho */
+  align-items: center; /* Alineación vertical */
+  z-index: 1000; /* Asegura que el navbar esté sobre otros elementos */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar-nav {
+  list-style: none; /* Sin viñetas */
+  margin: 0;
+  padding: 0;
+  display: flex; /* Disposición en línea */
+  align-items: center; /* Alineación vertical */
+  gap: 2rem; /* Espaciado entre los elementos */
+}
+
+.nav-item {
+  display: flex;
+  align-items: center; /* Alineación vertical */
+}
+
+.nav-item .nav-link {
+  color: #faf9f9; /* Color del enlace */
+  background-color: #0262c9; /* Color de fondo */
+  border-radius: 12px; /* Bordes redondeados */
+  text-decoration: none; /* Sin subrayado */
+  padding: 0.5rem 2.5rem; /* Espaciado interno ajustado */
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+}
+
+.nav-item .nav-link:hover {
+  background-color: #0056b3; /* Color al pasar el cursor */
+  border-radius: 7px; /* Bordes redondeados */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra adicional */
+}
+
+
+/* Ajusta el contenido debajo del navbar */
+body {
+  padding-top: 0; /* Elimina el espacio extra arriba */
+}
+
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Cambia la dirección de los elementos a vertical */
+    padding: 1rem; /* Aumenta el espaciado */
+    align-items: center; /* Centra los elementos */
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem; /* Reduce el tamaño de la fuente */
+    text-align: center; /* Centra el texto */
+  }
+
+  .navbar-nav {
+    flex-direction: column; /* Cambia la disposición a columna */
+    gap: 1rem; /* Espaciado más pequeño */
+  }
+
+  .nav-item .nav-link {
+    padding: 0.5rem 1.5rem; /* Reduce el espaciado interno */
+    font-size: 0.9rem; /* Reduce el tamaño del texto */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-brand {
+    font-size: 1rem; /* Aún más pequeño en pantallas muy pequeñas */
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem; /* Reduce el tamaño del texto del logo */
+  }
+
+  .nav-item .nav-link {
+    padding: 0.5rem 1rem; /* Reduce aún más el espaciado interno */
+    font-size: 0.8rem; /* Reduce el tamaño del texto */
+  }
+}

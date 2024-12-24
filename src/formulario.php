@@ -70,9 +70,11 @@ if ($role !== 'supervisor' && $role !== 'operador') {
 
       <!-- Botones para agregar/eliminar nombres -->
       <?php if ($role === 'supervisor'): ?>
-      <button type="button" id="agregarNombre">Agregar Nombre</button>
-      <button type="button" id="eliminarNombre">Eliminar Nombre</button>
-      <?php endif; ?>
+        <button type="button" id="agregarNombre">Agregar Nombre</button>
+        <button type="button" id="eliminarNombre">Eliminar Nombre</button>
+        <button type="button" id="modificarNombre">Modificar Nombre</button>
+        <?php endif; ?>
+
 
       <!-- Campo Tipo de Proyecto -->
       <label for="Tipo_de_proyecto">Tipo de proyecto:</label>
@@ -89,7 +91,8 @@ if ($role !== 'supervisor' && $role !== 'operador') {
       <!-- Botones para agregar/eliminar tipos de proyecto -->
       <?php if ($role === 'supervisor'): ?>
       <button type="button" id="agregarTipoProyecto">Agregar Tipo de Proyecto</button>
-      <button type="button" id="eliminarTipoProyecto">Eliminar Tipo de Proyecto</button>
+      <button type="button" id="eliminarTipoProyecto">Eliminar Proyecto</button>
+      <button type="button" id="modificarTipoProyecto">Modificar Proyecto</button>
       <?php endif; ?>
 
       <!-- Otros campos del formulario -->

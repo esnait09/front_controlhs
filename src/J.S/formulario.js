@@ -67,6 +67,37 @@ document
     }
   });
 
+document
+  .getElementById('modificarNombre')
+  .addEventListener('click', function () {
+    const selectNombre = document.getElementById('Nombre_y_Apellido');
+    const nombreSeleccionado = selectNombre.value;
+
+    if (nombreSeleccionado) {
+      const nuevoNombre = prompt(
+        `Ingrese el nuevo nombre para reemplazar "${nombreSeleccionado}":`
+      );
+      if (nuevoNombre) {
+        const nombresGuardados = JSON.parse(localStorage.getItem('nombres')) || [];
+        const indice = nombresGuardados.indexOf(nombreSeleccionado);
+        if (indice !== -1) {
+          nombresGuardados[indice] = nuevoNombre;
+          localStorage.setItem('nombres', JSON.stringify(nombresGuardados));
+
+          const options = selectNombre.querySelectorAll('option');
+          options.forEach((option) => {
+            if (option.value === nombreSeleccionado) {
+              option.value = nuevoNombre;
+              option.textContent = nuevoNombre.replace(/_/g, ' ');
+            }
+          });
+        }
+      }
+    } else {
+      alert('Seleccione un nombre para modificar');
+    }
+  });
+
 // Agregar/eliminar tipos de proyecto
 document
   .getElementById('agregarTipoProyecto')
@@ -108,5 +139,36 @@ document
       });
     } else {
       alert('Seleccione un tipo de proyecto para eliminar');
+    }
+  });
+
+document
+  .getElementById('modificarTipoProyecto')
+  .addEventListener('click', function () {
+    const selectTipoProyecto = document.getElementById('Tipo_de_proyecto');
+    const tipoSeleccionado = selectTipoProyecto.value;
+
+    if (tipoSeleccionado) {
+      const nuevoTipo = prompt(
+        `Ingrese el nuevo tipo de proyecto para reemplazar "${tipoSeleccionado}":`
+      );
+      if (nuevoTipo) {
+        const tiposGuardados = JSON.parse(localStorage.getItem('tiposProyecto')) || [];
+        const indice = tiposGuardados.indexOf(tipoSeleccionado);
+        if (indice !== -1) {
+          tiposGuardados[indice] = nuevoTipo;
+          localStorage.setItem('tiposProyecto', JSON.stringify(tiposGuardados));
+
+          const options = selectTipoProyecto.querySelectorAll('option');
+          options.forEach((option) => {
+            if (option.value === tipoSeleccionado) {
+              option.value = nuevoTipo;
+              option.textContent = nuevoTipo.replace(/_/g, ' ');
+            }
+          });
+        }
+      }
+    } else {
+      alert('Seleccione un tipo de proyecto para modificar');
     }
   });

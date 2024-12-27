@@ -12,7 +12,7 @@ $password = isset($_POST['password']) ? $_POST['password'] : null;
 
 if (!$username || !$password) {
     $_SESSION['error'] = "Por favor ingrese su usuario y contraseña.";
-    header("Location: login.php");
+    header("Location: index.html?error=empty_fields");
     exit;
 }
 
@@ -37,13 +37,11 @@ if ($result->num_rows === 1) {
         header("Location: src/formulario.php");
         exit;
     } else {
-        $_SESSION['error'] = "Contraseña incorrecta.";
-        header("Location: login.php");
+        header("Location: index.html?error=incorrect_password");
         exit;
     }
 } else {
-    $_SESSION['error'] = "Usuario no encontrado.";
-    header("Location: login.php");
+    header("Location: index.html?error=user_not_found");
     exit;
 }
 ?>

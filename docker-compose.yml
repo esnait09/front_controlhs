@@ -6,6 +6,6 @@ services:
       dockerfile: Dockerfile
     container_name: apache-php
     volumes:
-      - /home/soporte/control_de_horas/front_controlhs:/var/www/html
+      - /home/control_de_horas/front_controlhs:/var/www/html
     ports:
       - '8080:80'

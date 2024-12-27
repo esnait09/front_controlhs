@@ -131,6 +131,9 @@ if ($role !== 'supervisor' && $role !== 'operador') {
   <!-- Gráfico -->
   <div class="grafico-container">
     <h2>Horas Totales por Proyecto</h2>
+    <select id="userSelect" class="form-select mb-3">
+    <!-- Opciones se llenarán dinámicamente -->
+    </select>
     <canvas id="graficoHoras" width="800" height="400"></canvas>
     <?php
     // Conexión a la base de datos y recuperación de datos
@@ -155,86 +158,94 @@ if ($role !== 'supervisor' && $role !== 'operador') {
     ?>
 
     <script>
-        fetch('php/datos_grafico.php')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const ctx = document.getElementById('graficoHoras').getContext('2d');
+ fetch('php/datos_grafico.php')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const ctx = document.getElementById('graficoHoras').getContext('2d');
+        const userSelect = document.getElementById('userSelect');
 
-                // Verificar que los datos estén completos
-                if (!data.projects || !data.datasets) {
-                    console.error('Datos del gráfico incompletos:', data);
-                    return;
-                }
+        // Poblar el selector de usuarios
+        Object.keys(data).forEach(user => {
+            const option = document.createElement('option');
+            option.value = user;
+            option.textContent = user;
+            userSelect.appendChild(option);
+        });
 
-                // Crear gráfico de barras con animación
-                const chart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: data.projects, // Proyectos
-                        datasets: data.datasets // Datos desde PHP
+        // Función para actualizar el gráfico
+        const updateChart = (user) => {
+            const userData = data[user];
+            if (!userData) {
+                console.error(`Datos no encontrados para el usuario: ${user}`);
+                return;
+            }
+
+            chart.data.labels = userData.projects;
+            chart.data.datasets[0].data = userData.real_hours;
+            chart.data.datasets[1].data = userData.expected_hours;
+            chart.update();
+        };
+
+        // Crear gráfico inicial para el primer usuario
+        const firstUser = Object.keys(data)[0];
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data[firstUser].projects,
+                datasets: [
+                    {
+                        label: 'Horas Realizadas',
+                        data: data[firstUser].real_hours,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
                     },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Comparación de Horas Realizadas y Esperadas',
-                                font: {
-                                    size: 18
-                                }
-                            },
-                            legend: {
-                                position: 'top',
-                                labels: {
-                                    font: {
-                                        size: 14
-                                    }
-                                }
-                            },
-                            tooltip: {
-                                callbacks: {
-                                    label: function (context) {
-                                        const value = context.raw.toFixed(2); // Formatear a 2 decimales
-                                        return `${context.dataset.label}: ${value} horas`;
-                                    }
-                                }
-                            }
-                        },
-                        animation: {
-                            duration: 1000, // Duración de la animación
-                            easing: 'easeInOutCubic' // Efecto de aceleración/deceleración
-                        },
-                        scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Proyectos',
-                                    font: {
-                                        size: 14
-                                    }
-                                }
-                            },
-                            y: {
-                                beginAtZero: true,
-                                suggestedMax: 6, // Máximo sugerido en el eje Y
-                                title: {
-                                    display: true,
-                                    text: 'Horas',
-                                    font: {
-                                        size: 14
-                                    }
-                                }
-                            }
+                    {
+                        label: 'Horas Esperadas',
+                        data: data[firstUser].expected_hours,
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Horas Realizadas y Esperadas por Usuario',
+                        font: { size: 18 }
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: { font: { size: 14 } }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Horas'
                         }
                     }
-                });
-            })
-            .catch(error => console.error('Error al cargar los datos del gráfico:', error));
+                }
+            }
+        });
+
+        // Escuchar cambios en el selector
+        userSelect.addEventListener('change', (event) => {
+            updateChart(event.target.value);
+        });
+    })
+    .catch(error => console.error('Error al cargar los datos del gráfico:', error));
+
     </script>
   </div>
 

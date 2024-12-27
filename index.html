@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inicio de Sesión</title>
     <link rel="stylesheet" href="src/CSS/index.css" />
+    <style>
+      /* Estilos para el mensaje de error */
+      .response-message {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        border-radius: 5px;
+        display: none;
+      }
+
+      .response-message.active {
+        display: block;
+      }
+    </style>
   </head>
   <body>
     <div class="login-container">
@@ -22,7 +38,43 @@
         </div>
         <button type="submit">Entrar</button>
       </form>
+
+      <!-- Div para mostrar el mensaje de error -->
       <div id="response" class="response-message"></div>
     </div>
+
+    <script>
+      // Función para obtener los parámetros de la URL
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
+
+      // Mostrar el mensaje de error según el parámetro de la URL
+      const errorParam = getQueryParam('error');
+      const responseDiv = document.getElementById('response');
+
+      if (errorParam) {
+        let errorMessage = '';
+
+        switch (errorParam) {
+          case 'empty_fields':
+            errorMessage = 'Por favor ingrese su usuario y contraseña.';
+            break;
+          case 'incorrect_password':
+            errorMessage = 'Contraseña incorrecta.';
+            break;
+          case 'user_not_found':
+            errorMessage = 'Usuario no encontrado.';
+            break;
+          default:
+            errorMessage = 'Ocurrió un error desconocido.';
+            break;
+        }
+
+        responseDiv.textContent = errorMessage;
+        responseDiv.classList.add('active');
+      }
+    </script>
   </body>
 </html>

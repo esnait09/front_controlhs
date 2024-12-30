@@ -53,17 +53,6 @@ body {
   text-align: center;
 }
 
-/* Para el rol de supervisor, colocarlo abajo del gráfico */
-.cronometro-supervisor {
-  position: absolute;
-  bottom: 3.125rem; /* 50px */
-  right: 5.625rem; /* 90px */
-  width: 31.25rem; /* 500px */
-  background-color: #f9f9f9;
-  box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.1); /* 15px */
-}
-
-
 /* Contenedor del gráfico */
 .operador .grafico-container {
   background-color: #ffffff;
@@ -144,6 +133,18 @@ body {
   width: 100%;
   margin-top: 10px;
 }
+
+/* Para el rol de supervisor, colocarlo abajo del gráfico */
+.cronometro-supervisor {
+  position: absolute;
+  bottom: 5rem; /* Baja aún más el cronómetro */
+  right: 5.625rem; /* Mantiene la posición a la derecha */
+  width: 40.25rem; /* 500px */
+  background-color: #f9f9f9;
+  box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.1); /* 15px */
+}
+
+
 
 button {
   padding: 0.9375rem 1.25rem; /* 15px 20px */

@@ -29,7 +29,7 @@ if ($role !== 'supervisor' && $role !== 'operador') {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario</title>
-  <link rel="stylesheet" href="CSS/stylsesssss.css" />
+  <link rel="stylesheet" href="CSS/stylsessssss.css" />
   <link rel="stylesheet" href="CSS/navbar_generalx.css" />
   <script src="./J.S/scrips.js" defer></script>
   <script src="./J.S/formulario.js" defer></script>

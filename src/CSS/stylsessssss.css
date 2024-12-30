@@ -140,7 +140,7 @@ body {
 /* Para el rol de supervisor, colocarlo abajo del gráfico */
 .cronometro-supervisor {
   position: absolute;
-  bottom: -5.10rem; /* Baja aún más el cronómetro */
+  bottom: -10.10rem; /* Baja aún más el cronómetro */
   right: 1.25rem; /* Mantiene la posición a la derecha */
   width: 40.25rem; /* 500px */
   background-color: #f9f9f9;

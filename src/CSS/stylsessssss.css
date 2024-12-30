@@ -118,6 +118,9 @@ body {
     margin-left: 0; /* Elimina márgenes laterales */
     margin-top: 1rem; /* Reduce espacio superior */
   }
+  .cronometro-supervisor {
+    bottom: 0.1rem; /* Baja aún más el cronómetro en pantallas pequeñas */
+  }
 }
 
 /* Cronómetro */
@@ -137,9 +140,9 @@ body {
 /* Para el rol de supervisor, colocarlo abajo del gráfico */
 .cronometro-supervisor {
   position: absolute;
-  bottom: 5rem; /* Baja aún más el cronómetro */
+  bottom: 0.2rem; /* Baja aún más el cronómetro */
   right: 5.625rem; /* Mantiene la posición a la derecha */
-  width: 40.25rem; /* 500px */
+  width: 31.25rem; /* 500px */
   background-color: #f9f9f9;
   box-shadow: 0 0 0.9375rem rgba(0, 0, 0, 0.1); /* 15px */
 }
